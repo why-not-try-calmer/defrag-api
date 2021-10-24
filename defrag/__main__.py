@@ -36,13 +36,12 @@ async def register_modules_as_services() -> None:
 
     # registering
     for module_name in LOADED:
-        imported_module = importlib.import_module(
-            "defrag.modules." + module_name)
+        imported_module = importlib.import_module("defrag.modules." + module_name)
         if hasattr(imported_module, "register_service"):
             imported_module.register_service()
             LOGGER.debug(f"Registered {module_name} as service.")
 
-
+            
 @app.on_event("shutdown")
 async def close_session() -> None:
     await Session.close()
